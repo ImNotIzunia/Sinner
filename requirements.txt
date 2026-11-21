@@ -1,2 +1,4 @@
 discord.py>=2.4
 python-dotenv>=1.0
+ruff>=0.0.350
+pytest>=7.4
