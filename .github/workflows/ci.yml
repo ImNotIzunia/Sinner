@@ -24,7 +24,7 @@ jobs:
           cache: pip
       - run: pip install ruff
       - run: ruff check .
-  
+
   test:
     name: Python Verification ${{ matrix.python-version }}
     runs-on: ubuntu-latest
@@ -32,10 +32,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
-
     steps:
       - uses: actions/checkout@v7
-
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -45,7 +43,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Compile (syntax errors)
-        run: python -m compileall -q bot.py
+        run: python -m compileall -q main.py sinner
 
       - name: Module Import (without token)
-        run: python -c "import bot"
+        run: python -c "import main, sinner.bot"
