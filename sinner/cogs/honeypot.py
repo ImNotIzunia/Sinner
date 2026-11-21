@@ -59,10 +59,13 @@ class Honeypot(commands.Cog):
                 color = discord.Color.red()
                 banned = True
             except discord.Forbidden:
-                status = ("ERROR : **Ban impossible** : Insufficient permission or superior role than the bot. Manual action needed")
+                status = (
+                    "ERROR : **Ban impossible** : insufficient permissions or role higher than the bot's. "
+                    "Manual action needed."
+                )
                 color = discord.Color.dark_red()
             except discord.HTTPException as e:
-                status = "ERROR : An issue appears : {e}"
+                status = f"ERROR : An issue appears : {e}"
                 color = discord.Color.dark_red()
 
         log.info("Honeypot triggered by %s (%s) : %s", author, author.id, status)
