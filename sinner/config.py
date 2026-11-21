@@ -25,6 +25,12 @@ DELETE_HISTORY = min(int(os.getenv("DELETE_HISTORY_SECONDS", "3600")), 604800)
 
 AUTO_WARNING = _bool("AUTO_WARNING", "true")
 
+PROFILING = _bool("PROFILING", "true")
+RAID_JOINS = int(os.getenv("RAID_JOINS", "5"))
+RAID_WINDOW = int(os.getenv("RAID_WINDOW", "60"))
+
+UPDATE_CHECK = _bool("UPDATE_CHECK", "true")
+UPDATE_CHECK_HOURS = max(1, int(os.getenv("UPDATE_CHECK_HOURS", "6")))
 
 def validate() -> None:
     if not TOKEN or not HONEYPOT_ID or not ADMIN_ID:
