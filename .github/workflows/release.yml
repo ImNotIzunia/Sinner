@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Tag must be in the form vX.Y.Z
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+            echo "::error::Tag $GITHUB_REF_NAME must be in the form vX.Y.Z (e.g., v0.3.0)"; exit 1; }
+
+      - name: Tag must point to a commit in main
+        run: |
+          git fetch origin main
+          git merge-base --is-ancestor "$(git rev-parse "${GITHUB_REF_NAME}^{commit}")" origin/main || {
+            echo "::error::Tag must point to a commit in main"; exit 1; }
+
+      - name: Tag must correspond to __version__
+        run: |
+          CODE_VERSION=$(grep -oP '__version__ = "\K[^"]+' sinner/__init__.py)
+          [ "$GITHUB_REF_NAME" = "v$CODE_VERSION" ] || {
+            echo "::error::Tag $GITHUB_REF_NAME does not correspond to __version__ = $CODE_VERSION (sinner/__init__.py)"; exit 1; }
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --title "Sinner $GITHUB_REF_NAME" --generate-notes --verify-tag
