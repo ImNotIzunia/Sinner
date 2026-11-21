@@ -2,7 +2,7 @@ import logging
 import discord
 from discord.ext import commands
 
-from . import __version__, config
+from . import config
 from .views import JoinActionButton, UnbanButton
 
 

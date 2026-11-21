@@ -42,7 +42,8 @@ class UnbanButton(
         view = discord.ui.View(timeout=None)
         view.add_item(self.item)
         await interaction.response.edit_message(view=view)
-        await interaction.followup.send(f"<@{self.user_id}> unban by {interaction.user.mention}", allowed_mentions=NO_PING                )
+        await interaction.followup.send(f"<@{self.user_id}> unban by {interaction.user.mention}",
+            allowed_mentions=NO_PING)
 
 
 def unban_view(user_id: int) -> discord.ui.View:
@@ -62,11 +63,12 @@ class JoinActionButton(
     discord.ui.DynamicItem[discord.ui.Button],
     template=r"sinner:join(?Paction>ban|kick|ignore):(?P<id>[0-9]+)",
 ):
-    def __init(self, action: str, user_id: int, disabled: bool = False):
+    def __init__(self, action: str, user_id: int, disabled: bool = False):
+        label, style, emoji, _ = _JOIN_BUTTONS[action]
         super().__init__(
             discord.ui.Button(
                 label=label,
-                style=stylen,
+                style=style,
                 emoji=emoji,
                 custom_id=f"sinner:join:{action}:{user_id}",
                 disabled=disabled,
