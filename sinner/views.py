@@ -55,13 +55,12 @@ def unban_view(user_id: int) -> discord.ui.View:
 _JOIN_BUTTONS = {
     "ban": ("Ban", discord.ButtonStyle.danger, "🔨", "ban_members"),
     "kick": ("Kick", discord.ButtonStyle.secondary, "🚫", "kick_members"),
-    "ignore": ("Ignore", discord.ButtonStyle.success, "🔇", "ignore_members")
 }
 
 
 class JoinActionButton(
     discord.ui.DynamicItem[discord.ui.Button],
-    template=r"sinner:join(?Paction>ban|kick|ignore):(?P<id>[0-9]+)",
+        template=r"sinner:join:(?P<action>ban|kick):(?P<id>[0-9]+)",
 ):
     def __init__(self, action: str, user_id: int, disabled: bool = False):
         label, style, emoji, _ = _JOIN_BUTTONS[action]

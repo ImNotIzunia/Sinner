@@ -38,7 +38,7 @@ Message posted in the honeypot channel
  New member joins the server
  1. Compute a risk score (account age, avatar, username, time to join, raid...)
  2. Detect which invite was used
- 3. Post a profile in the admin channel ──► "Ban" / "Kick" / "Ignore" buttons available
+ 3. Post a profile in the admin channel ──► "Ban" / "Kick" buttons available
 ```
 
 The server owner is always whitelisted in the honeypot channel. All the buttons keep working even if the bot is restarted.
